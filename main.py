@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 from typing import List
 
+
 class User(BaseModel):
     id: int
     username: str
@@ -47,7 +48,5 @@ async def delete_user(user_id: int):
             del users[i]
             return {"detail": f"User {u.username} with id {user_id} has been deleted"}
     raise HTTPException(status_code=404, detail="User not found")
-
-
 
 
