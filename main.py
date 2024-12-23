@@ -9,7 +9,8 @@ class User(BaseModel):
     age: int
 
 class UserCreate(BaseModel):
-    id: int = Field(description='User id from int in list')
+    id: int = Field(gt=0,
+                    description='User id from int in list')
 
     username: str = Field(min_length=3,
                           max_length=20,
