@@ -9,8 +9,6 @@ class User(BaseModel):
     age: int
 
 class UserCreate(BaseModel):
-    id: int = Field(gt=0,
-                    description='User id from int in list')
 
     username: str = Field(min_length=3,
                           max_length=20,
@@ -27,14 +25,14 @@ users: List[User] = []
 async def get_users() -> List[User]:
     return users
 
-@app.post("/user/{username}/{age}", response_model=User)
+@app.post("/user", response_model=User)
 async def register_user(user: UserCreate):
     new_user_id = max((u.id for u in users), default=0) + 1
     new_user = User(id=new_user_id, username=user.username, age=user.age)
     users.append(new_user)
     return new_user
 
-@app.put("/user/{user_id}/{username}/{age}", response_model=User)
+@app.put("/user/{user_id}", response_model=User)
 async def update_user(user_id: int, user: UserCreate):
     for u in users:
         if u.id == user_id:
